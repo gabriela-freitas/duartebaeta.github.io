@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />
+	<title>BI4ALL-BOOKING</title>
+</head>
+<body class="bg">
+	<header class="nav-head">
+		<div class="container">
+			<a href="main.html" class="logo"></a>
+			<nav class="nav-bar">
+				<ul class="nav-list">
+					<li class="nav-items"><a href="book.html" class="nav-links">Book</a></li>
+					<li class="nav-items"><a href="cancel.html" class="nav-links">Cancel</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<section class="book-content">
+		<div class="room-button">
+			<form action="backend.js">
+				<div class="col-25">
+					<label for="rooms">Room Number</label>
+				</div>
+				<div class="change-room">
+					<input type="number" placeholder="1" id="room-changer" name="room" min="0" max="5">
+				</div>
+			</form>
+		</div>
+		<div class="calendar">
+			<iframe src="https://calendar.google.com/calendar/embed?src=gabriela2001freitas%40gmail.com&ctz=Europe%2FLisbon" id="calendar-url" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+		</div>
+		<div class="container-book">
+			<div class="row">
+			<div class="col-25">
+				<label for="name">Name</label>
+			</div>
+			<div class="col-75">
+				<input type="text" id="name" name="name" placeholder="Your name..">
+			</div>
+			</div>
+			<div class="row">
+				<div class="col-25">
+				<label for="start">Date:</label>
+				</div>
+				<div class="col-75">
+					<input type="date" id="start" name="trip-start" value="2022-03-23" min="datetime-local" max="2030-12-31">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-25">
+					<label for="country">Start-Time</label>
+					</div>
+					<div class="col-75">
+					<input type="time" id="appt" name="appt" min="00:00" max="23:59" required>
+					</div>
+			</div>
+			<div class="row">
+				<div class="col-25">
+					<label for="country">End-Time</label>
+					</div>
+					<div class="col-75">
+					<input type="time" id="apptend" name="apptend" min="00:00" max="23:59" required>
+					</div>
+				</div>
+			<div class="row">
+				<div class="col-25">
+				<label for="people">Number of members:</label>
+				</div>
+				<div class="col-75">
+				<input type="number" id="quantity" name="quantity" min="2" max="4">
+				</div>
+			</div>
+			<div class="row">
+			<input type="submit" value="Submit" onclick="httpGet('XXXXX')">
+			</div>
+		</div>
+	</section>
+	<script type="text/javascript">
+	function httpGet(param)
+	{
+		console.log("test");
+		const url = "https://script.google.com/macros/s/AKfycbxXBGs56pBrhcgwHg2MQmh5zPJCvvrN1AJz8vz7a19nstMhy6j6R9K7YlAZohkMrHMz-g/exec?param1=" + `"` + param + `"`;
+
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( "GET", url, false ); // false for synchronous request
+		xmlHttp.send( null );
+		return xmlHttp.responseText;
+	}
+	</script>
+</body>
+</html>

@@ -79,19 +79,24 @@
 				</div>
 			</div>
 			<div class="row">
-			<input type="submit" value="Submit" onclick="httpGet('XXXXX')">
+				<input type="submit" value="Submit" onclick="httpGet()">
 			</div>
 		</div>
 	</section>
 	<script type="text/javascript">
-	function httpGet(param)
+	function httpGet()
 	{
 		console.log("test");
-		const url = "https://script.google.com/macros/s/AKfycbxXBGs56pBrhcgwHg2MQmh5zPJCvvrN1AJz8vz7a19nstMhy6j6R9K7YlAZohkMrHMz-g/exec?param1=" + `"` + param + `"`;
+		const url = "https://script.google.com/macros/s/AKfycbxXBGs56pBrhcgwHg2MQmh5zPJCvvrN1AJz8vz7a19nstMhy6j6R9K7YlAZohkMrHMz-g/exec"
+		const input = {
+			name: "Duarte",
+			date: "23/03/2022",
+		}
 
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( "GET", url, false ); // false for synchronous request
-		xmlHttp.send( null );
+		xmlHttp.open( "POST", url, false ); // false for synchronous request
+		xmlHttp.setRequestHeader('Content-Type', 'application/json');
+		xmlHttp.send( input );
 		return xmlHttp.responseText;
 	}
 	</script>

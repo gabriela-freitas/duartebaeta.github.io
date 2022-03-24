@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />
 	<title>BI4ALL-BOOKING</title>
 </head>
+
 <body class="bg">
 	<header class="nav-head">
 		<div class="container">
@@ -30,75 +32,133 @@
 					<label for="rooms">Room Number</label>
 				</div>
 				<div class="change-room">
-					<input type="number" placeholder="1" id="room-changer" name="room" min="0" max="5">
+					<input alt="0 for all rooms combined" type="number" onchange="changeURL()" placeholder="1" id="room-changer" name="room" min="0"
+						max="5">
 				</div>
 			</form>
 		</div>
 		<div class="calendar">
-			<iframe src="https://calendar.google.com/calendar/embed?src=gabriela2001freitas%40gmail.com&ctz=Europe%2FLisbon" id="calendar-url" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+			<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Europe%2FLisbon&src=ZTg5M2YyaWI4MW1oa2Y3OHBvbzNwMWg4dm9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%232952a3"
+				id="calendar-url" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 		</div>
 		<div class="container-book">
 			<div class="row">
-			<div class="col-25">
-				<label for="name">Name</label>
-			</div>
-			<div class="col-75">
-				<input type="text" id="name" name="name" placeholder="Your name..">
-			</div>
+				<div class="col-25">
+					<label for="name">Name</label>
+				</div>
+				<div class="col-75">
+					<input type="text" id="name" name="name" placeholder="Your name.." required>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-25">
-				<label for="start">Date:</label>
+					<label for="name">Email</label>
 				</div>
 				<div class="col-75">
-					<input type="date" id="start" name="trip-start" value="2022-03-23" min="datetime-local" max="2030-12-31">
+					<input type="email" id="email" name="name" placeholder="Your email.." required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-25">
+					<label for="start">Date:</label>
+				</div>
+				<div class="col-75">
+					<input type="date" id="date" name="trip-start" value="2022-03-23" min="datetime-local"
+						max="2030-12-31" required>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-25">
 					<label for="country">Start-Time</label>
-					</div>
-					<div class="col-75">
-					<input type="time" id="appt" name="appt" min="00:00" max="23:59" required>
-					</div>
+				</div>
+				<div class="col-75">
+					<input type="time" id="start" name="appt" min="00:00" max="23:59" required>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-25">
 					<label for="country">End-Time</label>
-					</div>
-					<div class="col-75">
-					<input type="time" id="apptend" name="apptend" min="00:00" max="23:59" required>
-					</div>
-				</div>
-			<div class="row">
-				<div class="col-25">
-				<label for="people">Number of members:</label>
 				</div>
 				<div class="col-75">
-				<input type="number" id="quantity" name="quantity" min="2" max="4">
+					<input type="time" id="end" name="apptend" min="00:00" max="23:59" required>
 				</div>
 			</div>
 			<div class="row">
-				<input type="submit" value="Submit" onclick="httpGet()">
+				<div class="col-25">
+					<label for="people">Number of members:</label>
+				</div>
+				<div class="col-75">
+					<input type="number" id="members" name="quantity" min="2" max="4" required>
+				</div>
+			</div>
+			<div class="row">
+				<input id="submit-button" type="button" value="Submit" onclick="submit()">
 			</div>
 		</div>
 	</section>
 	<script type="text/javascript">
-	function httpGet()
-	{
-		console.log("test");
-		const url = "https://script.google.com/macros/s/AKfycbwnLa_nFsWYHsSpAyJofRCXymjaCBRcTUm2nq9DeBXs0Vol3lI25xzCOadOur-gu6adCQ/exec"
-		const input = {
-			name: "Duarte",
-			date: "23/03/2022",
+		function submit()
+		{
+			if (!document.getElementById("email").value || !document.getElementById("name").value || 
+			!document.getElementById("date").value || !document.getElementById("start").value || !document.getElementById("end").value || !document.getElementById("members").value)
+			{
+				alert('Please insert all the required data');
+				return;
+			}
+
+			let curURL = window.location.href;
+			let endURL = curURL.substring(0, curURL.search('book'));
+
+			let counter = endURL.length;
+			while (endURL[counter] != '/')
+				counter--;
+			
+			let authURL = 'authenticate.html';
+			let i = 0;
+			endURL += authURL;
+			window.location.href = endURL;
 		}
 
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( "POST", url, false ); // false for synchronous request
-		xmlHttp.setRequestHeader('Content-Type', 'application/json');
-		xmlHttp.send( input );
-		return xmlHttp.responseText;
-	}
+		function changeURL() {
+			const allURL = ["https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Europe%2FLisbon&src=ZTg5M2YyaWI4MW1oa2Y3OHBvbzNwMWg4dm9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=YjYzNDNmOXIzcXJna2o0MGFjdG9mbnZhazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=N29nOHFvZG00dWgxMmcyNjE1bnRqajZiNmdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=dWJxZGJmYmptN2FjZHNkM2xkYWF0OWExYmNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=b2xvdWtnOGc1cDB2c2xrbXUzNTM4OHV1bm9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=cHQtcHQucG9ydHVndWVzZSNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%232952a3&color=%232952a3&color=%232952a3&color=%232952a3&color=%232952a3&color=%230B8043", 
+			"https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Europe%2FLisbon&src=ZTg5M2YyaWI4MW1oa2Y3OHBvbzNwMWg4dm9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%232952a3", 
+			"https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Europe%2FLisbon&src=YjYzNDNmOXIzcXJna2o0MGFjdG9mbnZhazBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%232952a3", 
+			"https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Europe%2FLisbon&src=N29nOHFvZG00dWgxMmcyNjE1bnRqajZiNmdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%232952a3", 
+			"https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Europe%2FLisbon&src=dWJxZGJmYmptN2FjZHNkM2xkYWF0OWExYmNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%232952a3", 
+			"https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Europe%2FLisbon&src=b2xvdWtnOGc1cDB2c2xrbXUzNTM4OHV1bm9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%232952a3"];
+
+			let room = document.getElementById("room-changer").value;
+
+			let iframe = document.getElementById("calendar-url");
+			iframe.src = allURL[room];
+			httpPost();
+		}
+
+		async function httpPost() {
+			console.log("test");
+			const url = "https://script.google.com/macros/s/AKfycbwnLa_nFsWYHsSpAyJofRCXymjaCBRcTUm2nq9DeBXs0Vol3lI25xzCOadOur-gu6adCQ/exec"
+			const input = {
+				name: document.getElementById("name").value,
+				email: document.getElementById("email").value,
+				date: document.getElementById("date").value,
+				start: document.getElementById("start").value,
+				end: document.getElementById("end").value,
+				members: document.getElementById("members".value),
+			};
+
+			const requestOptions = {
+				method: "POST",
+				mode: 'no-cors',
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(input)
+			};
+			let response = await fetch(url, requestOptions);
+			let data = await response.text(); //or .json
+			console.log(data);
+		}
 	</script>
 </body>
+
 </html>

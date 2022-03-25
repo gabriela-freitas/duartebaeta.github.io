@@ -101,6 +101,8 @@ function httpPost()
 		body: data,
 		headers: {
 			"Content-Type": "application/json",
+			'Access-Control-Allow-Origin' : "*",
+			'Access-Control-Allow-Headers' : "*"
 		},
 	}).then(response => {
 		console.log(response);

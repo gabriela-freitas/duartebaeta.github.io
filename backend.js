@@ -60,75 +60,53 @@ function changeURL()
 
 function httpPost()
 {
-	// const input = {
-	// 	name: document.getElementById("name").value,
-	// 	email: document.getElementById("email").value,
-	// 	date: document.getElementById("date").value,
-	// 	start: document.getElementById("start").value,
-	// 	end: document.getElementById("end").value,
-	// 	members: document.getElementById("members").value,
-	// 	room: document.getElementById("room-changer").value,
-	// 	option: "Book"
-	// };
-
-
+	const input = {
+		name: document.getElementById("name").value,
+		email: document.getElementById("email").value,
+		date: document.getElementById("date").value,
+		start: document.getElementById("start").value,
+		end: document.getElementById("end").value,
+		members: document.getElementById("members").value,
+		room: document.getElementById("room-changer").value,
+		option: "Book"
+	};
 
 	const data = JSON.stringify({
-  "name": "hfhgf",
-  "email": "ahhhhh@gmail.com",
-  "date": "30/03/2022",
-  "start": "12:00",
-  "end": "17:00",
-  "members": "3",
-  "room": "3",
-  "option": "Book"
+		"name": "hfhgf",
+		"email": "ahhhhh@gmail.com",
+		"date": "30/03/2022",
+		"start": "12:00",
+		"end": "17:00",
+		"members": "3",
+		"room": "3",
+		"option": "Book"
 	});
 
-	const xhr = new XMLHttpRequest();
-	xhr.withCredentials = true;
+	console.log(data);
+	console.log(input);
+	// const input = {
+	// 	"name": "hfhgf",
+	// 	"email": "ahhhhh@gmail.com",
+	// 	"date": "31/03/2022",
+	// 	"start": "12:00",
+	// 	"end": "17:00",
+	// 	"members": "3",
+	// 	"room": "3",
+	// 	"option": "Book"
+	// };
 
-	xhr.addEventListener("readystatechange", function () {
-	if (this.readyState === this.DONE) {
-		console.log(this.responseText);
-	}
-	});
-
-	xhr.open("POST", "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec");
-	xhr.setRequestHeader("Content-Type", "application/json");
-
-	xhr.send(data);
-
-
-
-	// console.log(input);
-	// // const input = {
-	// // 	"name": "hfhgf",
-	// // 	"email": "ahhhhh@gmail.com",
-	// // 	"date": "31/03/2022",
-	// // 	"start": "12:00",
-	// // 	"end": "17:00",
-	// // 	"members": "3",
-	// // 	"room": "3",
-	// // 	"option": "Book"
-	// // };
-
-	// const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
-
-	// fetch(url, {
-	// 	method : "POST",
-	// 	body: input,
-	// 	mode: "no-cors",
-	// 	headers: {
-	// 		"Content-Type": "application/json",
-	// 	},
-	// }).then(
-	// 	async (response) => {
-	// 		console.log(await response);
-	// 		return await response.text();
-	// 	}
-	// ).catch(
-	// 	html => customError(html)
-	// );
+	const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
+	fetch(url, {
+		method : "POST",
+		body: data,
+		headers: {
+			"Content-Type": "application/json",
+		},
+	}).then(response => {
+		console.log(response);
+	}).catch(
+		html => customError(html)
+	);
 }
 
 /* Function that sends the http Post request to cancel a booking */

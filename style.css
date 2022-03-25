@@ -121,9 +121,7 @@ header::after {
 	text-align: center;
 	font-size: 2.188rem;
 	margin-bottom: 6rem;
-	/* color: white; */
 	color: #70e1bb;
-	/* font-weight: bold; */
 }
 
 .test-button {
@@ -158,6 +156,9 @@ header::after {
 	color: white;
 	display: block;
 }
+
+/*-------------------*/
+
 
 /* BOOK PAGE */
 
@@ -269,7 +270,7 @@ input[type=text], select, textarea, input[type=email]{
 	padding-top: 0.813rem;
 }
 
-
+/*---------------------*/
 
 
 /* CANCEL PAGE CONTENT */
@@ -326,6 +327,8 @@ input[type=text], select, textarea, input[type=email]{
 .submit-cancel {
 	margin-top: 1rem;
 }
+
+/*-------------------*/
 
 /* SNACK-BAR / TOAST */
 

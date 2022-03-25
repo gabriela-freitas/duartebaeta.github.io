@@ -10,18 +10,20 @@ function submit()
 	}
 
 	if (checkHour() != 'OK')
+	{
 		return;
-	httpPost();
-	// let curURL = window.location.href;
-	// let endURL = curURL.substring(0, curURL.search('book'));
-
-	// let counter = endURL.length;
-	// while (endURL[counter] != '/')
-	// 	counter--;
+	}
+	let curURL = window.location.href;
+	let endURL = curURL.substring(0, curURL.search('book'));
 	
-	// let authURL = 'authenticate.html';
-	// let i = 0;
-	// endURL += authURL;
+	let counter = endURL.length;
+	while (endURL[counter] != '/')
+	counter--;
+	
+	let authURL = 'authenticate.html';
+	let i = 0;
+	endURL += authURL;
+	httpPost();
 	//window.location.href = endURL;
 }
 
@@ -58,27 +60,75 @@ function changeURL()
 
 function httpPost()
 {
-	const input = {
-		name: document.getElementById("name").value,
-		email: document.getElementById("email").value,
-		date: document.getElementById("date").value,
-		start: document.getElementById("start").value,
-		end: document.getElementById("end").value,
-		members: document.getElementById("members").value,
-		room: document.getElementById("room-changer").value,
-		option: "Book"
-	};
+	// const input = {
+	// 	name: document.getElementById("name").value,
+	// 	email: document.getElementById("email").value,
+	// 	date: document.getElementById("date").value,
+	// 	start: document.getElementById("start").value,
+	// 	end: document.getElementById("end").value,
+	// 	members: document.getElementById("members").value,
+	// 	room: document.getElementById("room-changer").value,
+	// 	option: "Book"
+	// };
 
-	const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
 
-	fetch(url, {
-		method : "POST",
-		body: JSON.stringify(input),
-	}).then(
-		response => response.text()
-	).then(
-		html => customError(html)
-	);
+
+	const data = JSON.stringify({
+  "name": "hfhgf",
+  "email": "ahhhhh@gmail.com",
+  "date": "30/03/2022",
+  "start": "12:00",
+  "end": "17:00",
+  "members": "3",
+  "room": "3",
+  "option": "Book"
+	});
+
+	const xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+
+	xhr.addEventListener("readystatechange", function () {
+	if (this.readyState === this.DONE) {
+		console.log(this.responseText);
+	}
+	});
+
+	xhr.open("POST", "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec");
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	xhr.send(data);
+
+
+
+	// console.log(input);
+	// // const input = {
+	// // 	"name": "hfhgf",
+	// // 	"email": "ahhhhh@gmail.com",
+	// // 	"date": "31/03/2022",
+	// // 	"start": "12:00",
+	// // 	"end": "17:00",
+	// // 	"members": "3",
+	// // 	"room": "3",
+	// // 	"option": "Book"
+	// // };
+
+	// const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
+
+	// fetch(url, {
+	// 	method : "POST",
+	// 	body: input,
+	// 	mode: "no-cors",
+	// 	headers: {
+	// 		"Content-Type": "application/json",
+	// 	},
+	// }).then(
+	// 	async (response) => {
+	// 		console.log(await response);
+	// 		return await response.text();
+	// 	}
+	// ).catch(
+	// 	html => customError(html)
+	// );
 }
 
 /* Function that sends the http Post request to cancel a booking */
@@ -107,6 +157,7 @@ function httpCancelPost()
 
 function customError(error)
 {
+	console.log(error);
 	if (error == "all good")
 	{
 		snackbarAnimation("Your meeting has been schedualed!", 'green');
@@ -117,7 +168,11 @@ function customError(error)
 	}
 	else if (error == "room closed")
 	{
-		snackbarAnimation("The room is not open at that hour", 'red');
+		snackbarAnimation("The room is not open at that hour, please try another one", 'red');
+	}
+	else if (error == "schedule problem")
+	{
+		snackbarAnimation("erro", 'red');
 	}
 	else
 	{
@@ -188,7 +243,7 @@ function checkHour()
 			return 'error';
 		}
 	}
-	checkDate();
+	return checkDate();
 }
 
 /* Function that checks if the user is booking a room in the past */
@@ -242,6 +297,8 @@ function checkDate()
 // 		start: document.getElementById("start").value,
 // 		end: document.getElementById("end").value,
 // 		members: document.getElementById("members".value),
+// 		room: document.getElementById("room-changer").value,
+// 		option: "Book"
 // 	};
 
 // 	const requestOptions = {

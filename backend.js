@@ -71,42 +71,14 @@ function httpPost()
 		option: "Book"
 	};
 
-	const data = JSON.stringify({
-		"name": "hfhgf",
-		"email": "ahhhhh@gmail.com",
-		"date": "30/03/2022",
-		"start": "12:00",
-		"end": "17:00",
-		"members": "3",
-		"room": "3",
-		"option": "Book"
-	});
-
-	console.log(data);
-	console.log(input);
-	// const input = {
-	// 	"name": "hfhgf",
-	// 	"email": "ahhhhh@gmail.com",
-	// 	"date": "31/03/2022",
-	// 	"start": "12:00",
-	// 	"end": "17:00",
-	// 	"members": "3",
-	// 	"room": "3",
-	// 	"option": "Book"
-	// };
-
 	const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
+
 	fetch(url, {
 		method : "POST",
-		body: data,
-		headers: {
-			"Content-Type": "application/json",
-			'Access-Control-Allow-Origin' : "*",
-			'Access-Control-Allow-Headers' : "*"
-		},
-	}).then(response => {
-		console.log(response);
-	}).catch(
+		body: JSON.stringify(input),
+	}).then(
+		response => response.text()
+	).then(
 		html => customError(html)
 	);
 }

@@ -14,8 +14,8 @@
 	<title>BI4ALL-BOOKING</title>
 </head>
 
-<body class="bg">
-	<div id="snackbar" style="background-color: #333">Some text...</div>
+<body class="bg" onload="dateSet()">
+	<div id="snackbar" style="background-color: #333"></div>
 	<header class="nav-head">
 		<div class="container">
 			<a href="index.html" class="logo"></a>
@@ -33,7 +33,7 @@
 				<label for="rooms">Room Number</label>
 			</div>
 			<div class="change-room">
-				<input type="number" onchange="changeURL()" placeholder="1" id="room-changer" name="room" min="0" max="5" required>
+				<input type="number" onchange="changeURL()" id="room-changer" name="room" min="0" max="5" required>
 			</div>
 		</div>
 		<div class="calendar">
@@ -62,7 +62,7 @@
 					<label for="start">Date:</label>
 				</div>
 				<div class="col-75">
-					<input type="date" id="date" name="trip-start" value="2022-03-23" min="datetime-local"
+					<input type="date" id="date" name="trip-start" min="datetime-local"
 						max="2030-12-31" required>
 				</div>
 			</div>
@@ -95,7 +95,8 @@
 			</div>
 		</div>
 	</section>
-	<!--<button onclick="snackbarAnimation()">Show Snackbar</button>-->
+	<button onclick="checkHour()">Show Snackbar</button>
+	<!-- <button onclick="customError('capacity')">Show Snackbar</button> -->
 </body>
 
 </html>

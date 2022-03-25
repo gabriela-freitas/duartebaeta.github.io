@@ -316,11 +316,15 @@ input[type=text], select, textarea, input[type=email]{
 }
 
 .explain-text {
-	padding-top: 6rem;
+	padding-top: 4rem;
 	margin-bottom: 0;
 
 	font-size: 1.688rem;
 	color: white;
+}
+
+.submit-cancel {
+	margin-top: 1rem;
 }
 
 /* SNACK-BAR / TOAST */

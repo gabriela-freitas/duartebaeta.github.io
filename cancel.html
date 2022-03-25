@@ -7,10 +7,12 @@
 	<link rel="stylesheet" href="style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+	<script type="text/javascript" src="./backend.js"></script>	
 	<title>BI4ALL-CANCEL</title>
 </head>
 <body class="bg">
+	<div id="snackbar" style="background-color: #333"></div>
 	<header class="nav-head">
 		<div class="container">
 			<a href="index.html" class="logo"></a>
@@ -28,7 +30,8 @@
 		</div>
 		<div class="cancel-box">
 			<div class="cancel-input">
-				<input class="input-text" type="text" placeholder="Meeting ID...">
+				<input id="cancel-ID" class="input-text" type="text" placeholder="Meeting ID...">
+				<input class="submit-cancel" id="submit-button" type="button" value="Submit" onclick="submitCancel()">
 				<h3 class="explain-text">To cancel a booking, insert the meeting ID you used to authenticate.</h3>
 			</div>
 		</div>

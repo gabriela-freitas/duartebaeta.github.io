@@ -1,25 +1,43 @@
+/* Function that checks if the user has inputed all the required data, if so it calls the http request function, for booking*/
+
 function submit()
 {
 	if (!document.getElementById("email").value || !document.getElementById("name").value || 
 	!document.getElementById("date").value || !document.getElementById("start").value || !document.getElementById("end").value || !document.getElementById("members").value || !document.getElementById("room-changer").value)
 	{
-		alert('Please insert all the required data');
+		snackbarAnimation('Please insert all the required data', 'yellow');
 		return;
 	}
 
-	let curURL = window.location.href;
-	let endURL = curURL.substring(0, curURL.search('book'));
-
-	let counter = endURL.length;
-	while (endURL[counter] != '/')
-		counter--;
-	
-	let authURL = 'authenticate.html';
-	let i = 0;
-	endURL += authURL;
+	if (checkHour() != 'OK')
+		return;
 	httpPost();
+	// let curURL = window.location.href;
+	// let endURL = curURL.substring(0, curURL.search('book'));
+
+	// let counter = endURL.length;
+	// while (endURL[counter] != '/')
+	// 	counter--;
+	
+	// let authURL = 'authenticate.html';
+	// let i = 0;
+	// endURL += authURL;
 	//window.location.href = endURL;
 }
+
+/* Function that checks if the user has inputed all the required data, if so it calls the http request function, for cancel*/
+
+function submitCancel()
+{
+	if (!document.getElementById("cancel-ID").value)
+	{
+		snackbarAnimation('Please insert all the required data', 'yellow');
+		return;
+	}
+	httpCancelPost();
+}
+
+/* Function that changes the iframe url depending on the room agenda the user wants to see */
 
 function changeURL()
 {
@@ -36,6 +54,8 @@ function changeURL()
 	iframe.src = allURL[room];
 }
 
+/* Function that does the http request, sending the input the user inserted. It also sends an option so the API knows this is a request to book a room */
+
 function httpPost()
 {
 	const input = {
@@ -45,7 +65,8 @@ function httpPost()
 		start: document.getElementById("start").value,
 		end: document.getElementById("end").value,
 		members: document.getElementById("members").value,
-		room: document.getElementById("room-changer").value
+		room: document.getElementById("room-changer").value,
+		option: "Book"
 	};
 
 	const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
@@ -60,24 +81,131 @@ function httpPost()
 	);
 }
 
+/* Function that sends the http Post request to cancel a booking */
+
+function httpCancelPost()
+{
+	const input =
+	{
+		id: document.getElementById("cancel-ID").value,
+		option: "cancel"
+	};
+
+	const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
+
+	fetch(url, {
+		method : "POST",
+		body: JSON.stringify(input),
+	}).then(
+		response => response.text()
+	).then(
+		html => customError(html)
+	);
+}
+
+/* Function that checks for an error that the API sent as a response to the http request, if no error is found it goes through else, it runs the animations for a pop-up describing the error */
+
 function customError(error)
 {
 	let snackDiv = document.getElementById("snackbar");
 
-	if (error = "all good")
+	if (error == "all good")
 		return;
-	else
+	else if (error ==  "capacity")
 	{
-		snackDiv.textContent = "Error";
-		snackDiv.style = "background-color: #FF0000"
-		snackbarAnimation();
+		snackbarAnimation("There are no rooms with capacity available", 'red');
 	}
 }
 
-function snackbarAnimation() {
+/* Pop-up animations */
+
+function snackbarAnimation(text, color) {
 	var x = document.getElementById("snackbar");
+	
+	x.textContent = text;
 	x.className = "show";
+	if (color == 'yellow')
+		x.style = "background-color: #c5d90f";
+	else if (color == 'red')
+		x.style = "background-color: #FF0000";
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5500);
+}
+
+/* ---- Functions to set date to current day ---- */
+
+Date.prototype.toDateInputValue = (function() {
+	var local = new Date(this);
+	local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+	return local.toJSON().slice(0,10);
+});
+
+function dateSet()
+{
+	document.getElementById('date').value = new Date().toDateInputValue();
+}
+
+/* ------ ^^^^^^^^ ------------ ^^^^^^ --------- */
+
+/* Function that checks if the end hour is not before the start hour */
+
+function checkHour()
+{
+	let timeStart = document.getElementById("start").value;
+	let timeEnd = document.getElementById("end").value;
+
+	if (timeStart.substring(0, 2) > timeEnd.substring(0, 2))
+	{
+		snackbarAnimation('Meeting can\'t end before it starts', 'yellow');
+		return 'error';
+	}
+	else if (timeStart.substring(0, 2) == timeEnd.substring(0, 2))
+	{
+		if (timeStart.substring((timeStart.length - 2), timeStart.length) >= timeEnd.substring((timeEnd.length - 2), timeEnd.length))
+		{
+			snackbarAnimation('Meeting can\'t end before it starts', 'yellow');
+			return 'error';
+		}
+	}
+	checkDate();
+}
+
+/* Function that checks if the user is booking a room in the past */
+
+function checkDate()
+{
+	let today = new Date();
+
+	let date = today.getFullYear()+'-'+('0' + (today.getMonth() + 1)).slice(-2)+'-'+('0' + today.getDate()).slice(-2);
+	let dateSet = document.getElementById("date").value;
+
+	if (date > dateSet)
+	{
+		snackbarAnimation('Can\'t book a room in the past', 'yellow');
+		return 'error';
+	}
+	else if (date == dateSet)
+	{
+		let time = today.getHours() + ":" + today.getMinutes();
+		let timeSet = document.getElementById("start").value;
+
+		if (time.substring(0, 2) > timeSet.substring(0, 2))
+		{
+			snackbarAnimation('Can\'t book a room in the past', 'yellow');
+			return 'error';
+		}
+		else if (time.substring(0, 2) == timeSet.substring(0, 2))
+		{
+			if (time.substring((time.length - 2), (time.length)) > timeSet.substring((timeSet.length - 2), (timeSet.length)))
+			{
+				snackbarAnimation('Can\'t book a room in the past', 'yellow');
+				return 'error';
+			}
+		}
+		else
+			return 'OK';
+	}
+	else
+		return 'OK';
 }
 
 /* ----- Função antiga que estavamos a usar para fazer fetch ----- */

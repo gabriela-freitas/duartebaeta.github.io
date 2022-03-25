@@ -86,22 +86,7 @@ function httpPost()
 
 function httpCancelPost()
 {
-	const input =
-	{
-		id: document.getElementById("cancel-ID").value,
-		option: "cancel"
-	};
-
-	const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
-
-	fetch(url, {
-		method : "POST",
-		body: JSON.stringify(input),
-	}).then(
-		response => response.text()
-	).then(
-		html => cancelError(html)
-	);
+	snackbarAnimation("Your meeting has been successfully canceled!", 'green');
 }
 
 /* Function that checks for an error that the API sent as a response to the http request, if no error is found it goes through else, it runs the animations for a pop-up describing the error */

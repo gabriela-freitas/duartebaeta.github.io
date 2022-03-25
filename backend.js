@@ -99,7 +99,7 @@ function httpCancelPost()
 	}).then(
 		response => response.text()
 	).then(
-		html => customError(html)
+		html => cancelError(html)
 	);
 }
 
@@ -107,13 +107,33 @@ function httpCancelPost()
 
 function customError(error)
 {
-	let snackDiv = document.getElementById("snackbar");
-
 	if (error == "all good")
-		return;
+	{
+		snackbarAnimation("Your meeting has been schedualed!", 'green');
+	}
 	else if (error ==  "capacity")
 	{
-		snackbarAnimation("There are no rooms with capacity available", 'red');
+		snackbarAnimation("There are no rooms with enough capacity available", 'red');
+	}
+	else if (error == "room closed")
+	{
+		snackbarAnimation("The room is not open at that hour", 'red');
+	}
+	else
+	{
+		snackbarAnimation("Undefined error", 'red');
+	}
+}
+
+function cancelError(error)
+{
+	if (error == "canceled")
+	{
+		snackbarAnimation("Your meeting has been canceled!", 'green');
+	}
+	else
+	{
+		snackbarAnimation("Undefined error", 'red');
 	}
 }
 
@@ -128,6 +148,8 @@ function snackbarAnimation(text, color) {
 		x.style = "background-color: #c5d90f";
 	else if (color == 'red')
 		x.style = "background-color: #FF0000";
+	else if (color == 'green')
+		x.style = "background-color: #32a852";
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5500);
 }
 

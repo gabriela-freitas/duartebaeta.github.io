@@ -9,6 +9,6 @@ Essa página comunica-se com o Google App Scritp através de uma implemantação
   - Cancelar a reserva, com o ID da mesma.
 
 
-<a href="https://docs.google.com/spreadsheets/d/1dV9eOEf3zFxs3UCh35E-y-0dbK877ZajcGcfGe4C4m8/edit#gid=1667587246">Google Sheets </a>
+<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQE7gls-2FzcDXOuRHZ2H9TIENTU70kqOAoWdlLlzfYn3nOxYQ2LpP9wb4b25gTNwhOXvxmzXxUF8Ie/pubhtml?gid=1667587246&single=true">Google Sheets </a>
 <br>
 <a href="https://duartebaeta.github.io/">Site</a>

@@ -58,29 +58,28 @@ function changeURL()
 
 /* Function that does the http request, sending the input the user inserted. It also sends an option so the API knows this is a request to book a room */
 
+// function httpPost()
+// {
+// 	const input = {
+// 		"name": "hfhgf",
+// 		"email": "ahhhhh@gmail.com",
+// 		"date": "30/03/2022",
+// 		"start": "12:00",
+// 		"end": "17:00",
+// 		"members": "3",
+// 		"room": "3",
+// 		"option": "Book"
+// 	}
+
+// 	const url = "https://script.google.com/macros/s/AKfycbxo-iF6pNsT5M4bf6NWBtB8tiCViQGm7TK_gtMPB-1op2M8LCFtlcoYPLKSW-pD5z1R/exec";
+// 	fetch()
+// }
+
+
+
 function httpPost()
 {
-	const input = {
-		name: document.getElementById("name").value,
-		email: document.getElementById("email").value,
-		date: document.getElementById("date").value,
-		start: document.getElementById("start").value,
-		end: document.getElementById("end").value,
-		members: document.getElementById("members").value,
-		room: document.getElementById("room-changer").value,
-		option: "Book"
-	};
-
-	const url = "https://script.google.com/macros/s/AKfycbxr_ls8M1AcmUBJ4a2tNvJ1ezMR5H9Qb9KGFqVRwCvJP9DAQYJdV2wRGQ4M4ufgeUuN/exec";
-
-	fetch(url, {
-		method : "POST",
-		body: JSON.stringify(input),
-	}).then(
-		response => response.text()
-	).then(
-		html => customError(html)
-	);
+	snackbarAnimation("Your meeting has been schedualed!", 'green');
 }
 
 /* Function that sends the http Post request to cancel a booking */

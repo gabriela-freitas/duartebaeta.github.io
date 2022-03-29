@@ -1,5 +1,3 @@
-//var main_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("form")
-//var infos = main_sheet.getRange("B2:B7").getValues()
 var rooms_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("rooms")
 var info_rooms = rooms_sheet.getDataRange().getValues()
 
@@ -24,49 +22,51 @@ function check_if_open(info_rooms, info, hour_start, hour_end)
   return (true)
 }
 
-function generate_data_array(info)
+function generate_data(info)
 {
-  var data_array = []
-  data_array = data_array.concat(info.name)
-  var date = info.date.split("/", 3)
+
+  var date = info.date.toString().split("/", 3)
   var start = info.start
   var end = info.end
-  var email = info.email
         var hour_start = start.split(":",2);
         var hour_end = end.split(":", 2);
         if (!check_if_open(info_rooms, info, hour_start, hour_end))
           return (null)
         var start = new Date(date[2], date[1] - 1, date[0], hour_start[0], hour_start[1]);
         var end = new Date(date[2], date[1] - 1, date[0], hour_end[0], hour_end[1]);
-  data_array = data_array.concat(start)
-  data_array = data_array.concat(end)
-  data_array = data_array.concat(info.members)
-  data_array = data_array.concat(info.room)
-  data_array = data_array.concat(email)
-    return (data_array)
+
+  var data = {
+    "name": info.name,
+    "start": start,
+    "end": end,
+    "members": info.members,
+    "room": info.room,
+    "email": info.email
+  }
+  return (data)
 }
 
 function agendar(content)
 {
-  var data_array = generate_data_array(content)
+  var data = generate_data(content)
   
-  if (data_array == null)
+  if (data == null)
     return ("Room closed")
-  if (parseFloat(data_array[4]) == 0)
+  if (parseFloat(data.room) == 0)
   {
-    var room = check_better_room(data_array, info_rooms)
+    var room = check_better_room(data, info_rooms)
     if (room == false)
       return ("Capacity")
     else
     {
-      data_array[4] = room
-      create_event(data_array)
+      data.room = room
+      create_event(data)
     } 
   }
   else
   {
-    if (check_availability(data_array))
-      create_event(data_array);
+    if (check_availability(data))
+      create_event(data);
     else
       return ("schedule problem")
   }

@@ -8,14 +8,14 @@
     <p>
     Hello, <?=fill_email.name?>
     </p>
-    <p><strong>Room: <?=fill_email.room?></strong></p>
+    <p><strong>Room <?=fill_email.room?> for <?=fill_email.members?> members</strong></p>
     <p>
     Start: <?=fill_email.start?>
     </p>
     <p>
     End: <?=fill_email.end?>
     </p>
-    <p>You event ID is: <?=fill_email.event_id?></p>
+    <p>Your event ID is: <strong> <?=event_id?> </strong></p>
     <p>Use it if you need to cancel it at <br>https://duartebaeta.github.io/cancel.html</p>
   </body>
 </html>

@@ -2,7 +2,7 @@ var rooms_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("rooms")
 var rooms = rooms_sheet.getRange("A2:A").getValues()
 
 //função que faz o check se há disponibilidade daquele dia
-//A function to check if the room chosen bye user is avaible
+//A function to check if the room chosen by the user is avaible
 function check_availability(data)
 {
   var start = new Date (data.start)

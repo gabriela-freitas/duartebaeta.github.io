@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <h2>You have a booking!</h2>
+    <p>
+    Hello, <?=fill_email.name?>
+    </p>
+    <p><strong>Room <?=fill_email.room?> for <?=fill_email.members?> members</strong></p>
+    <p>
+    Start: <?=fill_email.start?>
+    </p>
+    <p>
+    End: <?=fill_email.end?>
+    </p>
+    <p>Your event ID is: <strong> <?=event_id?> </strong></p>
+    <p>Use it if you need to cancel it at <br>https://duartebaeta.github.io/cancel.html</p>
+  </body>
+</html>
